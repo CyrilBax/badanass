@@ -1,12 +1,12 @@
 package com.example.badanass.domain.repository.impl
 
-import androidx.lifecycle.LiveData
+import com.example.badanass.data.dataSrouce.LocalDataSource
 import com.example.badanass.data.models.Card
 import com.example.badanass.domain.repository.CardRepository
 
-class CardRepositoryImpl: CardRepository {
+class CardRepositoryImpl(private val dataSource: LocalDataSource): CardRepository {
 
-    override fun getList(): LiveData<List<Card>> {
+    override fun getList(): List<Card> {
 
         /*val cards: LiveData<List<Card>> = Transformations.map(database.cardDao.getAllCard()) {
             it.asDomainModel()
@@ -18,13 +18,14 @@ class CardRepositoryImpl: CardRepository {
                 database.cardDao.insert(card.asDatabaseModel())
             }
         }*/
-        //TODO -> remote or local
-        return
+        //TODO -> remote or local sub on internet connection
+
+        return dataSource.getCardList()
     }
 
 
-    override fun getCard(): LiveData<Card> {
+    override fun getCard(id: String): Card? {
         //TODO -> remote or local
-        return
+        return dataSource.getCard(id)
     }
 }

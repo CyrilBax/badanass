@@ -15,5 +15,5 @@ interface CardDao {
     fun get(key: Long): DatabaseCard?
 
     @Query("SELECT * FROM DatabaseCard ORDER BY cardId DESC")
-    fun getAllCard(): LiveData<List<DatabaseCard>>
+    fun getAllCard(): List<DatabaseCard>
 }

@@ -24,7 +24,7 @@ interface CardRepository {
         }
     }*/
 
-    fun getList(): LiveData<List<Card>>
+    fun getList(): List<Card>
 
-    fun getCard(): LiveData<Card>
+    fun getCard(id: String): Card?
 }

@@ -1,12 +1,11 @@
 package com.example.badanass.domain.usecases
 
-import androidx.lifecycle.LiveData
 import com.example.badanass.data.models.Card
 import com.example.badanass.domain.repository.CardRepository
 
-class getListUseCase {
+class GetListUseCase(private val repository: CardRepository) {
 
-    fun execute(): LiveData<List<Card>> {
-        return CardRepository.getList()
+    fun execute(): List<Card> {
+        return repository.getList()
     }
 }
