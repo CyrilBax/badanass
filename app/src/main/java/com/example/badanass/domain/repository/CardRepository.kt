@@ -11,9 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 
-class CardRepository(private val database: CardDatabse) {
+interface CardRepository {
 
-    val cards: LiveData<List<Card>> = Transformations.map(database.cardDao.getAllCard()) {
+    /*val cards: LiveData<List<Card>> = Transformations.map(database.cardDao.getAllCard()) {
         it.asDomainModel()
     }
 
@@ -22,5 +22,9 @@ class CardRepository(private val database: CardDatabse) {
             val card = CardNetwork.devcard.getCrads().await()
             database.cardDao.insert(card.asDatabaseModel())
         }
-    }
+    }*/
+
+    fun getList(): LiveData<List<Card>>
+
+    fun getCard(): LiveData<Card>
 }
