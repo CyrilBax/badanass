@@ -1,5 +1,6 @@
 package com.example.badanass.domain.profiles
 
+import com.example.badanass.data.dataSource.local.LocalDataSource
 import com.example.badanass.domain.repository.CardRepository
 import com.example.badanass.domain.repository.impl.CardRepositoryImpl
 import dagger.Module
@@ -9,7 +10,7 @@ import dagger.Provides
 class CardRepositoryModule {
 
     @Provides
-    fun provideCardRepository() : CardRepository {
-        return CardRepositoryImpl()
+    fun provideCardRepository(localDataSource: LocalDataSource) : CardRepository {
+        return CardRepositoryImpl(localDataSource)
     }
 }
