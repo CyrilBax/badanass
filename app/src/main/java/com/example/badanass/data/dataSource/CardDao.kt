@@ -11,7 +11,7 @@ interface CardDao {
     fun insert(card: List<DatabaseCard>)
 
     @Query("SELECT * FROM DatabaseCard WHERE cardId = :key")
-    fun get(key: Long): DatabaseCard?
+    fun get(key: String): DatabaseCard?
 
     @Query("SELECT * FROM DatabaseCard ORDER BY cardId DESC")
     fun getAllCard(): List<DatabaseCard>

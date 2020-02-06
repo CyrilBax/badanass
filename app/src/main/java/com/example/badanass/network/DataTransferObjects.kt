@@ -12,7 +12,7 @@ data class NetworkCardContainer(val videos: List<NetworkCard>)
  */
 @JsonClass(generateAdapter = true)
 data class NetworkCard(
-    val cardId: Long,
+    val cardId: String,
     val name: String,
     val type: String,
     val img: String
@@ -25,7 +25,8 @@ fun NetworkCardContainer.asDomainModel(): List<Card> {
     return videos.map {
         Card(
             cardId = it.cardId,
-            name = it.name
+            name = it.name,
+            img = it.img
         )
     }
 }
@@ -37,7 +38,8 @@ fun NetworkCardContainer.asDatabaseModel(): List<DatabaseCard> {
     return videos.map {
         DatabaseCard(
             cardId = it.cardId,
-            name = it.name
+            name = it.name,
+            img = it.img
         )
     }
 }

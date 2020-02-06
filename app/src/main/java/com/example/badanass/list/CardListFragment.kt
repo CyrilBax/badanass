@@ -6,10 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
+import com.example.badanass.data.models.Card
 import com.example.badanass.databinding.FragmentCardListBinding
 import com.example.badanass.domain.profiles.DaggerListViewModule
 import com.example.badanass.domain.usecases.GetCardUseCase
 import com.example.badanass.domain.usecases.GetListUseCase
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -43,7 +48,15 @@ class CardListFragment : Fragment() {
         binding.setLifecycleOwner(this)
 
 //        binding.info = getCardUseCase.execute(1).toString()
-        binding.info = getListCardUseCase.execute().toString()
+        getListCardUseCase.execute()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                binding.info = it.toString()
+            }, {
+                binding.info = it.toString()
+            })
+        // binding.info = getListCardUseCase.execute().toString()
 
         return binding.root
     }
