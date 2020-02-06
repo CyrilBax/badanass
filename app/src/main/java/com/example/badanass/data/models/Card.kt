@@ -3,6 +3,7 @@ package com.example.badanass.data.models
 data class Card(
     val cardId: String,
     val name: String,
+    val type: String,
     val img: String? = null
 )
 

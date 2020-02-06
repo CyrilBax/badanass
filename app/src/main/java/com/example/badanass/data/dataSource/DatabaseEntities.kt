@@ -9,6 +9,7 @@ data class DatabaseCard(
     @PrimaryKey(autoGenerate = false)
     var cardId: String,
     var name: String,
+    var type: String,
     var img: String? = null
 )
 
@@ -17,6 +18,7 @@ fun List<DatabaseCard>.asDomainModel(): List<Card> {
         Card(
             cardId = it.cardId,
             name = it.name,
+            type = it.type,
             img = it.img
         )
     }

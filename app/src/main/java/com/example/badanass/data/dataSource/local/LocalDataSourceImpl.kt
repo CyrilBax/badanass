@@ -8,8 +8,8 @@ import io.reactivex.Observable
 class LocalDataSourceImpl(private val dataBasse: CardDatabse): LocalDataSource {
 
     private val allCard = listOf(
-        Card("e", "first", ""),
-        Card("ee", "two", "")
+        Card("e", "first", "", ""),
+        Card("ee", "two", "", "")
     )
 
     override fun getCardList(): Observable<List<Card>> {
@@ -26,6 +26,7 @@ class LocalDataSourceImpl(private val dataBasse: CardDatabse): LocalDataSource {
             DatabaseCard(
                 cardId = it.cardId,
                 name = it.name,
+                type = it.type,
                 img = it.img
             )
         })

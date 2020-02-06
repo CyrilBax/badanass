@@ -15,6 +15,7 @@ buildscript {
         lifecycle_extensions = "2.0.0"
         moshi_version = "1.6.0"
         dagger_version = "2.26"
+        picasso_version = '2.71828'
     }
     repositories {
         google()

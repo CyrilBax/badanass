@@ -8,8 +8,8 @@ import io.reactivex.Observable
 class RemoteDataSourceImpl: RemoteDataSource {
 
     private val allCard = listOf(
-        Card("e", "first", ""),
-        Card("ee", "two","")
+        Card("e", "first", "", ""),
+        Card("ee", "two","", "")
     )
 
     override fun getCardList(): Observable<List<Card>> {

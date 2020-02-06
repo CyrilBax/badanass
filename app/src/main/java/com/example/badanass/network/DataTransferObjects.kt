@@ -26,6 +26,7 @@ fun NetworkCardContainer.asDomainModel(): List<Card> {
         Card(
             cardId = it.cardId,
             name = it.name,
+            type = it.type,
             img = it.img
         )
     }
@@ -39,6 +40,7 @@ fun NetworkCardContainer.asDatabaseModel(): List<DatabaseCard> {
         DatabaseCard(
             cardId = it.cardId,
             name = it.name,
+            type = it.type,
             img = it.img
         )
     }

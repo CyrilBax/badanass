@@ -5,17 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
-import com.example.badanass.data.models.Card
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.example.badanass.R
 import com.example.badanass.databinding.FragmentCardListBinding
-import com.example.badanass.domain.profiles.DaggerListViewModule
-import com.example.badanass.domain.usecases.GetCardUseCase
-import com.example.badanass.domain.usecases.GetListUseCase
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
+
 
 /**
  * A simple [Fragment] subclass.
@@ -27,36 +22,35 @@ import javax.inject.Inject
  */
 class CardListFragment : Fragment() {
 
-    private val viewModel: CardListViewModel by lazy {
-        ViewModelProviders.of(this).get(CardListViewModel::class.java)
-    }
-
-    @Inject lateinit var getCardUseCase: GetCardUseCase
-    @Inject lateinit var getListCardUseCase: GetListUseCase
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentCardListBinding.inflate(inflater)
+        val binding: FragmentCardListBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_card_list, container, false
+        )
 
-        DaggerListViewModule
-            .create()
-            .inject(this)
+        val application = requireNotNull(this.activity).application
+
+        // Get reference to the viewmodel associated with this fragment
+        val viewModel by viewModels<CardListViewModel>()
+
+        binding.cardListViewModel = viewModel
 
         binding.setLifecycleOwner(this)
 
+        val adapter = CardListAdapter()
+
+        binding.cardList.adapter = adapter
+
+        viewModel.cardList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.data = it
+            }
+        })
+
 //        binding.info = getCardUseCase.execute(1).toString()
-        getListCardUseCase.execute()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                binding.info = it.toString()
-            }, {
-                binding.info = it.toString()
-            })
-        // binding.info = getListCardUseCase.execute().toString()
 
         return binding.root
     }
