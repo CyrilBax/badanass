@@ -6,11 +6,12 @@
     
     <data>
         <variable
-            name=""
-            type="" />
+            name="CardDetailViewModel"
+            type="com.example.badanass.detail.CardDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

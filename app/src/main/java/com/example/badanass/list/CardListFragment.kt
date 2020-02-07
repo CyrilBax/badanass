@@ -1,15 +1,16 @@
 package com.example.badanass.list
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.example.badanass.MainActivityContract
 import com.example.badanass.R
-import com.example.badanass.databinding.FragmentCardListBinding
+import kotlinx.android.synthetic.main.fragment_card_list.*
 
 
 /**
@@ -22,36 +23,46 @@ import com.example.badanass.databinding.FragmentCardListBinding
  */
 class CardListFragment : Fragment() {
 
+    private val viewModel by viewModels<CardListViewModel>()
+
+    private var contract: MainActivityContract? = null
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val binding: FragmentCardListBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_card_list, container, false
-        )
+        return inflater.inflate(R.layout.fragment_card_list, container, false)
+    }
 
-        val application = requireNotNull(this.activity).application
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
-        // Get reference to the viewmodel associated with this fragment
-        val viewModel by viewModels<CardListViewModel>()
+        if (context is MainActivityContract) {
+            contract = context
+        }
+    }
 
-        binding.cardListViewModel = viewModel
 
-        binding.setLifecycleOwner(this)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val adapter = CardListAdapter()
+        val adapter = CardListAdapter(viewModel)
 
-        binding.cardList.adapter = adapter
+        card_list.adapter = adapter
 
-        viewModel.cardList.observe(viewLifecycleOwner, Observer {
+        viewModel.cardList.observe(viewLifecycleOwner, Observer { adapter.data = it ?: listOf() })
+
+        viewModel.clickDetected.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.data = it
+                contract?.onItemSelected(it)
             }
         })
 
-//        binding.info = getCardUseCase.execute(1).toString()
 
-        return binding.root
+    }
+
+    companion object {
+        fun newInstance() = CardListFragment()
     }
 }

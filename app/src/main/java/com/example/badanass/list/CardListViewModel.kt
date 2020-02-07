@@ -1,5 +1,6 @@
 package com.example.badanass.list
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,20 +14,22 @@ import javax.inject.Inject
 
 
 
-class CardListViewModel(): ViewModel() {
+class CardListViewModel: ViewModel() {
 
-    @Inject
-    lateinit var getCardUseCase: GetCardUseCase
     @Inject
     lateinit var getListCardUseCase: GetListUseCase
 
-    private val _cardList = MutableLiveData<List<Card>>()
+    private var _cardList = MutableLiveData<List<Card>>()
     val cardList: LiveData<List<Card>>
             get() = _cardList
 
     private val _errorList = MutableLiveData<Throwable>()
     val errorList: LiveData<Throwable>
         get() = _errorList
+
+    private var _clickDetected = MutableLiveData<String>()
+    val clickDetected: LiveData<String>
+        get() = _clickDetected
 
     init {
         DaggerListViewModule
@@ -35,6 +38,7 @@ class CardListViewModel(): ViewModel() {
         getCardList()
     }
 
+    //TODO: DISPOSE
     fun getCardList() {
         getListCardUseCase.execute()
             .subscribeOn(Schedulers.io())
@@ -44,5 +48,13 @@ class CardListViewModel(): ViewModel() {
             }, {
                 _errorList.value = it
             })
+    }
+
+    fun onCardSelected(card: Card) {
+        _clickDetected.value = card.cardId
+    }
+
+    fun onNavigateEnd() {
+        _clickDetected.value = null
     }
 }

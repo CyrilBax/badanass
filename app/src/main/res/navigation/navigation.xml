@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/cardList">
+    app:startDestination="@id/cardListFragment">
+
     <fragment
-        android:id="@+id/cardList"
+        android:id="@+id/cardListFragment"
         android:name="com.example.badanass.list.CardListFragment"
-        android:label="fragment_card_list"
-        tools:layout="@layout/fragment_card_list" />
+        android:label="CardListFragment" >
+        <action
+            android:id="@+id/action_cardListFragment_to_cardDetailFragment"
+            app:destination="@id/cardDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardDetailFragment"
+        android:name="com.example.badanass.detail.CardDetailFragment"
+        android:label="CardDetailFragment">
+        <argument
+            android:name="cardId"
+            app:argType="String" />
+    </fragment>
+
 </navigation>

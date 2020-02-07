@@ -4,16 +4,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.badanass.R
 import com.example.badanass.data.models.Card
+import com.example.badanass.databinding.ItemCardListBinding
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 
-class CardListAdapter: RecyclerView.Adapter<CardListAdapter.ViewHolder>() {
+class CardListAdapter(private val viewModel: CardListViewModel): RecyclerView.Adapter<CardListAdapter.ViewHolder>() {
 
     var data = listOf<Card>()
         set(value) {
@@ -22,7 +21,11 @@ class CardListAdapter: RecyclerView.Adapter<CardListAdapter.ViewHolder>() {
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+        // Dont forget parent and false !!!!!!!!!!
+        val bind = ItemCardListBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
+            cardListViewModel = viewModel
+        }
+        return ViewHolder(bind)
     }
 
     override fun getItemCount() = data.size
@@ -32,38 +35,24 @@ class CardListAdapter: RecyclerView.Adapter<CardListAdapter.ViewHolder>() {
         holder.bind(item)
     }
 
-    class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val cardName: TextView = itemView.findViewById(R.id.card_name)
-        val cardType: TextView = itemView.findViewById(R.id.card_type)
-        val cardImg: ImageView = itemView.findViewById(R.id.card_img)
+    class ViewHolder (private val binding: ItemCardListBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Card) {
-            val res = itemView.context.resources
-            cardName.text = item.name
-            cardType.text = item.type
+
+            binding.card = item
+
             Picasso.get().load(item.img)
                 .placeholder(R.drawable.ic_launcher_background)
-                .into(cardImg, object:Callback{
-                override fun onSuccess() {
-                    Log.i("success", "youpi")
-                }
+                .into(binding.cardImg, object : Callback {
+                    override fun onSuccess() {
+                        Log.i("success", "youpi")
+                    }
 
-                override fun onError(e: Exception?) {
-                    Log.i("error", e.toString())
-                }
-            })
+                    override fun onError(e: Exception?) {
+                        Log.i("error", e.toString())
+                    }
+                })
+            binding.executePendingBindings()
         }
-
-        companion object {
-            fun from(parent: ViewGroup): ViewHolder {
-                val layoutInflater =
-                    LayoutInflater.from(parent.context)
-                val view = layoutInflater
-                    .inflate(R.layout.item_card_list, parent, false)
-                return ViewHolder(view)
-            }
-        }
-
     }
-
 }
