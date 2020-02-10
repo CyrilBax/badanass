@@ -1,5 +1,7 @@
 package com.example.badanass.detail
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +15,8 @@ import com.example.badanass.R
 import com.example.badanass.databinding.FragmentCardDetailBinding
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
+import java.lang.Exception
 
 class CardDetailFragment : Fragment() {
 
@@ -37,16 +41,25 @@ class CardDetailFragment : Fragment() {
         binding.lifecycleOwner = this
 
         viewModel.card.observe(viewLifecycleOwner, Observer {
-            it?.img?.let {
-                Picasso.get().load(it)
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .into(binding.cardImg, object : Callback {
-                        override fun onSuccess() {
-                            Log.i("success detail", "img load")
+            it?.let {
+                Picasso.get()
+                    .load(it.img)
+                    .placeholder(R.drawable.loading_animation)
+                    .into(object : Target {
+                        override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                            binding.cardImg.setImageResource(R.drawable.ic_broken_image)
                         }
 
-                        override fun onError(e: Exception?) {
-                            Log.i("error detail", e.toString())
+                        override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                            binding.cardImg.setImageBitmap(bitmap)
+                        }
+
+                        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                            if (it.img === null) {
+                                binding.cardImg.setImageResource(R.drawable.ic_broken_image)
+                            } else {
+                                binding.cardImg.setImageResource(R.drawable.loading_animation)
+                            }
                         }
                     })
             }

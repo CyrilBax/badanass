@@ -49,7 +49,6 @@ class CardListAdapter(
             Picasso.get()
                 .load(item.img)
                 .placeholder(R.drawable.loading_animation)
-                .error(R.drawable.ic_broken_image)
                 .into(object : Target {
                     override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
                         binding.cardImg.setImageResource(R.drawable.ic_broken_image)
