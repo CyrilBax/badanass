@@ -1,5 +1,7 @@
 package com.example.badanass.list
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import com.example.badanass.data.models.Card
 import com.example.badanass.databinding.ItemCardListBinding
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import java.lang.Exception
 
 class CardListAdapter(
@@ -43,15 +46,25 @@ class CardListAdapter(
 
             binding.card = item
 
-            Picasso.get().load(item.img)
-                .placeholder(R.drawable.ic_launcher_background)
-                .into(binding.cardImg, object : Callback {
-                    override fun onSuccess() {
-                        Log.i("success", "youpi")
+            Picasso.get()
+                .load(item.img)
+                .placeholder(R.drawable.loading_animation)
+                .error(R.drawable.ic_broken_image)
+                .into(object : Target {
+                    override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                        binding.cardImg.setImageResource(R.drawable.ic_broken_image)
                     }
 
-                    override fun onError(e: Exception?) {
-                        Log.i("error", e.toString())
+                    override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                        binding.cardImg.setImageBitmap(bitmap)
+                    }
+
+                    override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                        if (item.img === null) {
+                            binding.cardImg.setImageResource(R.drawable.ic_broken_image)
+                        } else {
+                            binding.cardImg.setImageResource(R.drawable.loading_animation)
+                        }
                     }
                 })
             binding.executePendingBindings()

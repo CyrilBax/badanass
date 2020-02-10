@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.example.badanass.MainActivityContract
 import com.example.badanass.R
 import kotlinx.android.synthetic.main.fragment_card_list.*
+import kotlinx.android.synthetic.main.fragment_card_list.view.*
 
 
 /**
@@ -51,7 +52,12 @@ class CardListFragment : Fragment() {
 
         card_list.adapter = adapter
 
-        viewModel.cardList.observe(viewLifecycleOwner, Observer { adapter.data = it ?: listOf() })
+        viewModel.cardList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                view.progress_bar.visibility = View.GONE
+                adapter.data = it
+            }
+        })
 
         viewModel.clickDetected.observe(viewLifecycleOwner, Observer {
             it?.let {
