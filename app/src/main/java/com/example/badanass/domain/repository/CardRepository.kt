@@ -7,5 +7,5 @@ interface CardRepository {
 
     fun getList(): Observable<List<Card>>
 
-    fun getCard(id: String): Card?
+    fun getCard(name: String): Observable<Card>
 }

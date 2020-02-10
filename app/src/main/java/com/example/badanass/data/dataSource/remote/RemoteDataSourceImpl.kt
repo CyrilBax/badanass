@@ -15,7 +15,7 @@ class RemoteDataSourceImpl: RemoteDataSource {
         return CardNetwork.cardService.getCards().map { it.Basic }
     }
 
-    override fun getCard(id: String): Card {
-        return allCard[0]
+    override fun getCard(name: String): Observable<Card> {
+        return CardNetwork.cardService.getCard(name)
     }
 }

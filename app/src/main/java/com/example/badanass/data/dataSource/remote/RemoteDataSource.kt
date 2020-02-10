@@ -7,5 +7,5 @@ interface RemoteDataSource {
 
     fun getCardList(): Observable<List<Card>>
 
-    fun getCard(id: String): Card?
+    fun getCard(name: String): Observable<Card>
 }

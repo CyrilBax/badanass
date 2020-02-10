@@ -12,7 +12,9 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 
-class CardListAdapter(private val viewModel: CardListViewModel): RecyclerView.Adapter<CardListAdapter.ViewHolder>() {
+class CardListAdapter(
+    private val viewModel: CardListViewModel
+): RecyclerView.Adapter<CardListAdapter.ViewHolder>() {
 
     var data = listOf<Card>()
         set(value) {

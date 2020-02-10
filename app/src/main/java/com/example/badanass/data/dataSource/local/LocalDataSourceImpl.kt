@@ -4,9 +4,8 @@ import com.example.badanass.data.dataSource.CardDatabse
 import com.example.badanass.data.dataSource.DatabaseCard
 import com.example.badanass.data.models.Card
 import io.reactivex.Observable
-import io.reactivex.rxkotlin.toObservable
 
-class LocalDataSourceImpl(private val dataBase: CardDatabse): LocalDataSource {
+class LocalDataSourceImpl(private val dataBase: CardDatabse) : LocalDataSource {
 
     private val allCard = listOf(
         Card("e", "first", "", ""),
@@ -27,8 +26,19 @@ class LocalDataSourceImpl(private val dataBase: CardDatabse): LocalDataSource {
         }
     }
 
-    override fun getCard(id: String): Card {
-        return allCard[0]
+    override fun getCard(name: String): Observable<Card>? {
+        return Observable.fromCallable {
+            val card = dataBase.cardDao.get(name)
+            card?.let {
+                Card(
+                    cardId = card.cardId,
+                    name = card.name,
+                    type = card.type,
+                    img = card.img
+                )
+            }
+        }
+
     }
 
     override fun saveCard(cards: List<Card>) {

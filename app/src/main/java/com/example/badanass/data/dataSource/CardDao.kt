@@ -10,7 +10,7 @@ interface CardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(card: List<DatabaseCard>)
 
-    @Query("SELECT * FROM DatabaseCard WHERE cardId = :key")
+    @Query("SELECT * FROM DatabaseCard WHERE name = :key")
     fun get(key: String): DatabaseCard?
 
     @Query("SELECT * FROM DatabaseCard ORDER BY cardId DESC")

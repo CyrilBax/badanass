@@ -7,7 +7,7 @@ interface LocalDataSource {
 
     fun getCardList(): Observable<List<Card>>
 
-    fun getCard(id: String): Card
+    fun getCard(name: String): Observable<Card>?
 
     fun saveCard(cards: List<Card>)
 }

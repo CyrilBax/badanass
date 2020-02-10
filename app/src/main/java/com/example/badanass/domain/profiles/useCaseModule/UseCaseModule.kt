@@ -16,7 +16,7 @@ class UseCaseModule {
     }
 
     @Provides
-    fun providGetCardUseCase(repository: CardRepository): GetCardUseCase {
+    fun provideGetCardUseCase(repository: CardRepository): GetCardUseCase {
         return GetCardUseCase(repository)
     }
 }

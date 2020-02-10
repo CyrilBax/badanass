@@ -56,6 +56,7 @@ class CardListFragment : Fragment() {
         viewModel.clickDetected.observe(viewLifecycleOwner, Observer {
             it?.let {
                 contract?.onItemSelected(it)
+                viewModel.onNavigateEnd()
             }
         })
 

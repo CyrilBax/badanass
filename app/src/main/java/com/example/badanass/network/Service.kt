@@ -10,6 +10,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import java.util.*
 
 private const val BASE_URL = "https://omgvamp-hearthstone-v1.p.rapidapi.com//"
@@ -36,6 +37,9 @@ interface CardService {
 
     @GET("cards")
     fun getCards(): Observable<CardRemote>
+
+    @GET("cards/{name}")
+    fun getCard(@Path("name") name: String): Observable<Card>
 }
 
 /**

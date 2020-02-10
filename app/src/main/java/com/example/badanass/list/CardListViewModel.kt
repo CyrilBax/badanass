@@ -1,12 +1,10 @@
 package com.example.badanass.list
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.badanass.data.models.Card
 import com.example.badanass.domain.profiles.DaggerListViewModule
-import com.example.badanass.domain.usecases.GetCardUseCase
 import com.example.badanass.domain.usecases.GetListUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -44,14 +42,14 @@ class CardListViewModel: ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                _cardList.value = it
+                _cardList.postValue(it)
             }, {
-                _errorList.value = it
+                _errorList.postValue(it)
             })
     }
 
     fun onCardSelected(card: Card) {
-        _clickDetected.value = card.cardId
+        _clickDetected.value = card.name
     }
 
     fun onNavigateEnd() {
