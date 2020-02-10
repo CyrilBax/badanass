@@ -13,14 +13,19 @@ class CardRepositoryImpl(
 ): CardRepository {
 
     override fun getList(): Observable<List<Card>> {
-        /*return localDataSource.getCardList()
+        return localDataSource.getCardList()
             .switchIfEmpty(remoteDataSource.getCardList()
-                .doOnNext{localDataSource.saveCard(it)})*/
-        return remoteDataSource.getCardList().doOnNext { localDataSource.saveCard(it) }
+                .doOnNext{localDataSource.saveCard(it)})
+//        return remoteDataSource.getCardList().doOnNext { localDataSource.saveCard(it) }
     }
 
     override fun getCard(name: String): Observable<Card> {
-        val card = localDataSource.getCard(name)
-        return card ?: remoteDataSource.getCard(name)
+
+        return localDataSource.getCard(name)
+            .switchIfEmpty(remoteDataSource.getCard(name))
+            .doOnNext { localDataSource.saveCard(listOf(it)) }
+
+        /*var card = localDataSource.getCard(name)
+        return card ?: remoteDataSource.getCard(name)*/
     }
 }

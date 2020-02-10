@@ -26,7 +26,7 @@ class LocalDataSourceImpl(private val dataBase: CardDatabse) : LocalDataSource {
         }
     }
 
-    override fun getCard(name: String): Observable<Card>? {
+    override fun getCard(name: String): Observable<Card> {
         return Observable.fromCallable {
             val card = dataBase.cardDao.get(name)
             card?.let {
