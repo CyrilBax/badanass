@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.badanass.MainActivityContract
 import com.example.badanass.R
 import kotlinx.android.synthetic.main.fragment_card_list.*
@@ -51,6 +52,10 @@ class CardListFragment : Fragment() {
         val adapter = CardListAdapter(viewModel)
 
         card_list.adapter = adapter
+
+        val manager = GridLayoutManager(context, 1)
+
+        card_list.layoutManager = manager
 
         viewModel.cardList.observe(viewLifecycleOwner, Observer {
             it?.let {

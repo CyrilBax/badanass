@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Text style for card name into detail view -->
+    <style name="TextAppearance_card_detail">
+
+    </style>
+
 </resources>

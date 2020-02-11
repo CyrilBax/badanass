@@ -21,14 +21,16 @@
             android:layout_height="wrap_content"
             android:minHeight="@dimen/img_size"
             android:minWidth="@dimen/img_size"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginLeft="@dimen/margin"
             android:layout_marginTop="64dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@drawable/ic_launcher_background" />
 
         <TextView
+            style="@style/TextAppearance_title_card_detail"
+
             android:id="@+id/card_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,34 +38,42 @@
             android:layout_marginLeft="35dp"
             android:text="@{cardDetailViewModel.card.name}"
             app:layout_constraintStart_toEndOf="@+id/card_img"
-            app:layout_constraintTop_toTopOf="@+id/card_img" />
+            app:layout_constraintTop_toTopOf="@+id/card_img"
+            tools:text="Card Name"/>
 
         <TextView
+            style="@style/TextAppearance_sub_title_card_detail"
+
             android:id="@+id/card_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
             android:text="@{cardDetailViewModel.card.type}"
             app:layout_constraintStart_toStartOf="@+id/card_name"
-            app:layout_constraintTop_toTopOf="@+id/card_name" />
+            app:layout_constraintTop_toTopOf="@+id/card_name"
+            tools:text="Card type"/>
 
         <TextView
+            style="@style/TextAppearance_info_local_card_detail"
+
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginLeft="@dimen/margin"
             android:layout_marginTop="64dp"
             android:text="@string/info"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_img" />
 
         <TextView
+            style="@style/TextAppearance_info_local_card_detail"
+
             android:id="@+id/card_info_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginLeft="@dimen/margin"
             android:layout_marginTop="64dp"
             android:text="@string/player_class"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +87,8 @@
             android:layout_marginRight="2dp"
             android:text="@{cardDetailViewModel.card.cardId}"
             app:layout_constraintEnd_toEndOf="@+id/card_class"
-            app:layout_constraintTop_toTopOf="@+id/textView3" />
+            app:layout_constraintTop_toTopOf="@+id/textView3"
+            tools:text="Card Info"/>
 
         <TextView
             android:id="@+id/card_class"
@@ -87,7 +98,8 @@
             android:layout_marginLeft="51dp"
             android:text="@{cardDetailViewModel.card.type}"
             app:layout_constraintStart_toEndOf="@+id/card_info_title"
-            app:layout_constraintTop_toTopOf="@+id/card_info_title" />
+            app:layout_constraintTop_toTopOf="@+id/card_info_title"
+            tools:text="Player class or card id"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
