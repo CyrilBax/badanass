@@ -72,9 +72,9 @@ class CardDetailFragment : Fragment() {
 
         const val ARG_CARD_ID = "ARG_CARD_ID"
 
-        fun newInstance(cardId: String): CardDetailFragment {
+        fun newInstance(name: String): CardDetailFragment {
             val bundle = Bundle().apply {
-                putString(ARG_CARD_ID, cardId)
+                putString(ARG_CARD_ID, name)
             }
             return CardDetailFragment().apply {
                 arguments = bundle

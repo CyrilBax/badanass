@@ -7,6 +7,8 @@ import com.example.badanass.data.models.Card
 import com.example.badanass.domain.profiles.DaggerListViewModule
 import com.example.badanass.domain.usecases.GetListUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -16,6 +18,8 @@ class CardListViewModel: ViewModel() {
 
     @Inject
     lateinit var getListCardUseCase: GetListUseCase
+
+    private val subscription: CompositeDisposable = CompositeDisposable()
 
     private var _cardList = MutableLiveData<List<Card>>()
     val cardList: LiveData<List<Card>>
@@ -33,12 +37,14 @@ class CardListViewModel: ViewModel() {
         DaggerListViewModule
             .create()
             .inject(this)
-        getCardList()
+        subscription.add(
+            getCardList()
+        )
     }
 
     //TODO: DISPOSE
-    fun getCardList() {
-        getListCardUseCase.execute()
+    fun getCardList() : Disposable {
+        return getListCardUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -54,5 +60,10 @@ class CardListViewModel: ViewModel() {
 
     fun onNavigateEnd() {
         _clickDetected.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        subscription.clear()
     }
 }

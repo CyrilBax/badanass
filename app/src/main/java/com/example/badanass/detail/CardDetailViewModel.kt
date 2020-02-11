@@ -8,22 +8,24 @@ import com.example.badanass.data.models.Card
 import com.example.badanass.domain.profiles.DaggerDetailViewModule
 import com.example.badanass.domain.usecases.GetCardUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 class CardDetailViewModel(
-    private val cardId: String
-): ViewModel() {
+    private val name: String
+) : ViewModel() {
 
     @Inject
     lateinit var getCardUseCase: GetCardUseCase
 
-    private var viewModelJob = Job()
+    private val subscription: CompositeDisposable = CompositeDisposable()
 
     private val _card = MutableLiveData<Card>()
     val card: LiveData<Card>
-        get()= _card
+        get() = _card
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>
@@ -33,11 +35,13 @@ class CardDetailViewModel(
         DaggerDetailViewModule
             .create()
             .inject(this)
-        getCardDetails()
+        subscription.add(
+            getCardDetails()
+        )
     }
 
-    private fun getCardDetails() {
-        getCardUseCase.execute(cardId)
+    private fun getCardDetails(): Disposable {
+        return getCardUseCase.execute(name)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -45,11 +49,12 @@ class CardDetailViewModel(
             }, {
                 _error.value = it.toString()
             })
+
     }
 
     override fun onCleared() {
         super.onCleared()
-        viewModelJob.cancel()
+        subscription.clear()
     }
 
 }

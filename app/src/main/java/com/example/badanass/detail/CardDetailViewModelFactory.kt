@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModelProvider
 import java.lang.IllegalArgumentException
 
 class CardDetailViewModelFactory (
-    private val cardId: String
+    private val name: String
 ): ViewModelProvider.Factory {
 
     @Suppress("unchecked_casr")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CardDetailViewModel::class.java)) {
-            return CardDetailViewModel(cardId) as T
+            return CardDetailViewModel(name) as T
         }
         throw IllegalArgumentException("Unknow ViewModel class")
     }
