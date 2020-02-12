@@ -1,6 +1,5 @@
 package com.example.badanass.domain.repository.impl
 
-import android.util.Log
 import com.example.badanass.data.dataSource.local.LocalDataSource
 import com.example.badanass.data.dataSource.remote.RemoteDataSource
 import com.example.badanass.data.models.Card
@@ -16,16 +15,11 @@ class CardRepositoryImpl(
         return localDataSource.getCardList()
             .switchIfEmpty(remoteDataSource.getCardList()
                 .doOnNext{localDataSource.saveCard(it)})
-//        return remoteDataSource.getCardList().doOnNext { localDataSource.saveCard(it) }
     }
 
     override fun getCard(name: String): Observable<Card> {
-
         return localDataSource.getCard(name)
-            .switchIfEmpty(remoteDataSource.getCard(name))
-            .doOnNext { localDataSource.saveCard(listOf(it)) }
-
-        /*var card = localDataSource.getCard(name)
-        return card ?: remoteDataSource.getCard(name)*/
+            .switchIfEmpty(remoteDataSource.getCard(name)
+            .doOnNext { localDataSource.saveCard(listOf(it)) })
     }
 }

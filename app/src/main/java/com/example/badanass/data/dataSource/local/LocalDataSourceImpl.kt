@@ -1,5 +1,6 @@
 package com.example.badanass.data.dataSource.local
 
+import android.util.Log
 import com.example.badanass.data.dataSource.CardDatabse
 import com.example.badanass.data.dataSource.DatabaseCard
 import com.example.badanass.data.models.Card
@@ -7,13 +8,7 @@ import io.reactivex.Observable
 
 class LocalDataSourceImpl(private val dataBase: CardDatabse) : LocalDataSource {
 
-    private val allCard = listOf(
-        Card("e", "first", "", ""),
-        Card("ee", "two", "", "")
-    )
-
     override fun getCardList(): Observable<List<Card>> {
-        // Send an object like an observable
         return Observable.fromCallable {
             dataBase.cardDao.getAllCard().map {
                 Card(
@@ -23,22 +18,44 @@ class LocalDataSourceImpl(private val dataBase: CardDatabse) : LocalDataSource {
                     img = it.img
                 )
             }
-        }
-    }
-
-    override fun getCard(name: String): Observable<Card> {
-        return Observable.fromCallable {
-            val card = dataBase.cardDao.get(name)
-            card?.let {
-                Card(
-                    cardId = card.cardId,
-                    name = card.name,
-                    type = card.type,
-                    img = card.img
-                )
+        }.flatMap {
+            if (it.size === 0) {
+                Log.i("hello", "zero case")
+                Observable.empty<List<Card>>()
+            } else {
+                Log.i("HELLO", it.toString())
+                Observable.just(it)
             }
         }
 
+        /*return dataBase.cardDao.getAllCard().map { card ->
+            card.map {
+                Card(
+                    cardId = it.cardId,
+                    name = it.name,
+                    type = it.type,
+                    img = it.img
+                )
+            }
+        }.flatMap {
+            if (it.isEmpty()) {
+                Log.i("hellooooo", "THERE")
+                Observable.empty<List<Card>>()
+            } else {
+                Observable.just(it)
+            }
+        }*/
+    }
+
+    override fun getCard(name: String): Observable<Card> {
+        return dataBase.cardDao.get(name)?.map {
+            Card(
+                cardId = it.cardId,
+                name = it.name,
+                type = it.type,
+                img = it.img
+            )
+        }?: Observable.empty()
     }
 
     override fun saveCard(cards: List<Card>) {

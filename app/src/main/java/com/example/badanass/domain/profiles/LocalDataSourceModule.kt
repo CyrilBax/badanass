@@ -10,6 +10,7 @@ import com.example.badanass.data.dataSource.asDomainModel
 import com.example.badanass.data.models.Card
 import dagger.Module
 import dagger.Provides
+import io.reactivex.Observable
 
 @Module
 class LocalDataSourceModule {
