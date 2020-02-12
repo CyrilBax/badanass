@@ -60,7 +60,6 @@ class CardListFragment : Fragment() {
 
         viewModel.cardList.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
                 view.progress_bar.visibility = View.GONE
                 adapter.data = it
             }
@@ -68,7 +67,7 @@ class CardListFragment : Fragment() {
 
         viewModel.errorList.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Toast.makeText(context, "erreur de chargement des données", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "erreur lors du chargement des données", Toast.LENGTH_LONG).show()
             }
         })
 
