@@ -16,8 +16,9 @@ data class DatabaseCard(
     var img: String? = null
 )
 
-fun List<DatabaseCard>.asDomainModel(): List<Card> {
-    return map {
+/*fun Observable<List<DatabaseCard>>.asDomainModel(): Observable<List<Card>> {
+    return map { card ->
+        card.map {
             Card(
                 cardId = it.cardId,
                 name = it.name,
@@ -25,5 +26,16 @@ fun List<DatabaseCard>.asDomainModel(): List<Card> {
                 img = it.img
             )
         }
+    }
+}*/
 
+fun List<DatabaseCard>.asDomainModel(): List<Card> {
+    return map {
+        Card(
+            cardId = it.cardId,
+            name = it.name,
+            type = it.type,
+            img = it.img
+        )
+    }
 }

@@ -42,7 +42,6 @@ class CardListViewModel: ViewModel() {
         )
     }
 
-    //TODO: DISPOSE
     fun getCardList() : Disposable {
         return getListCardUseCase.execute()
             .subscribeOn(Schedulers.io())
