@@ -4,6 +4,7 @@ import com.example.badanass.domain.profiles.CardRepositoryModule
 import com.example.badanass.domain.repository.CardRepository
 import com.example.badanass.domain.usecases.GetCardUseCase
 import com.example.badanass.domain.usecases.GetListUseCase
+import com.example.badanass.domain.usecases.RefreshCardList
 import dagger.Module
 import dagger.Provides
 
@@ -18,5 +19,9 @@ class UseCaseModule {
     @Provides
     fun provideGetCardUseCase(repository: CardRepository): GetCardUseCase {
         return GetCardUseCase(repository)
+    }
+    @Provides
+    fun provideRefreshCardList(repository: CardRepository): RefreshCardList {
+        return RefreshCardList(repository)
     }
 }

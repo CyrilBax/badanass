@@ -20,6 +20,13 @@ class CardRepositoryImpl(
     override fun getCard(name: String): Observable<Card> {
         return localDataSource.getCard(name)
             .switchIfEmpty(remoteDataSource.getCard(name)
-                .doOnNext { localDataSource.saveCard(listOf(it)) })
+                .doOnNext {localDataSource.saveCard(listOf(it)) })
+    }
+
+    override fun refreshCardList(): Observable<List<Card>> {
+        return remoteDataSource.getCardList()
+            .doOnNext {
+                localDataSource.saveCard(it)
+            }
     }
 }

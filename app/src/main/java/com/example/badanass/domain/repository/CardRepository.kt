@@ -8,4 +8,6 @@ interface CardRepository {
     fun getList(): Observable<List<Card>>
 
     fun getCard(name: String): Observable<Card>
+
+    fun refreshCardList(): Observable<List<Card>>
 }

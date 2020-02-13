@@ -2,15 +2,12 @@ package com.example.badanass.list
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.badanass.R
 import com.example.badanass.data.models.Card
 import com.example.badanass.databinding.ItemCardListBinding
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import java.lang.Exception
