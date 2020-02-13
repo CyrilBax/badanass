@@ -7,9 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class NetworkCardContainer(val videos: List<NetworkCard>)
 
-/**
- * Videos represent a devbyte that can be played.
- */
+
 @JsonClass(generateAdapter = true)
 data class NetworkCard(
     val cardId: String,
@@ -18,9 +16,7 @@ data class NetworkCard(
     val img: String
 )
 
-/**
- * Convert Network results to database objects
- */
+
 fun NetworkCardContainer.asDomainModel(): List<Card> {
     return videos.map {
         Card(
@@ -32,9 +28,7 @@ fun NetworkCardContainer.asDomainModel(): List<Card> {
     }
 }
 
-/**
- * Convert Network results to database objects
- */
+
 fun NetworkCardContainer.asDatabaseModel(): List<DatabaseCard> {
     return videos.map {
         DatabaseCard(

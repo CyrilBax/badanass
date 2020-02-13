@@ -11,7 +11,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
-import java.util.*
 
 private const val BASE_URL = "https://omgvamp-hearthstone-v1.p.rapidapi.com//"
 
@@ -26,7 +25,7 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 /**
- * A retrofit service to fetch a devbyte playlist.
+ * A retrofit service to fetch a cardList.
  */
 interface CardService {
 
@@ -43,7 +42,7 @@ interface CardService {
 }
 
 /**
- * Main entry point for network access. Call like `DevByteNetwork.devbytes.getPlaylist()`
+ * Main entry point for network access.
  */
 object CardNetwork {
 

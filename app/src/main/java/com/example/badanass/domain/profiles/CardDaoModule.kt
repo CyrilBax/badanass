@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class CardDaoModule() {
+class CardDaoModule {
 
     @Provides
     fun provideCardDao(context: Context): CardDao {

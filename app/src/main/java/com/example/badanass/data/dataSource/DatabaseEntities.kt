@@ -3,9 +3,6 @@ package com.example.badanass.data.dataSource
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.badanass.data.models.Card
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
 
 @Entity
 data class DatabaseCard(

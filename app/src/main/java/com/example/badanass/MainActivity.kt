@@ -2,10 +2,8 @@ package com.example.badanass
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.example.badanass.detail.CardDetailFragment
 import com.example.badanass.list.CardListFragment
-import android.widget.Toast
 
 class MainActivity : AppCompatActivity(), MainActivityContract {
 
