@@ -1,6 +1,5 @@
 package com.example.badanass.data.dataSource.local
 
-import android.util.Log
 import com.example.badanass.data.dataSource.CardDatabse
 import com.example.badanass.data.dataSource.DatabaseCard
 import com.example.badanass.data.models.Card
@@ -20,10 +19,8 @@ class LocalDataSourceImpl(private val dataBase: CardDatabse) : LocalDataSource {
             }
         }.flatMap {
             if (it.size === 0) {
-                Log.i("hello", "zero case")
                 Observable.empty<List<Card>>()
             } else {
-                Log.i("HELLO", it.toString())
                 Observable.just(it)
             }
         }
