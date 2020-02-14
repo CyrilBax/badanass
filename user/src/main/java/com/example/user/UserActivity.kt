@@ -5,16 +5,22 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.widget.Toolbar
 import com.example.user.ui.user.UserFragment
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.user_activity.*
 
 class UserActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.user_activity)
 
-//        setSupportActionBar(toolbar_user)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar_user)
+
+        setSupportActionBar(toolbar)
+
+//        supportActionBar?.setDisplayShowHomeEnabled(true)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -24,8 +30,8 @@ class UserActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
         return true
     }
 

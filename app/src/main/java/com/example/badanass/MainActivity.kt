@@ -3,13 +3,12 @@ package com.example.badanass
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.example.badanass.detail.CardDetailFragment
 import com.example.badanass.list.CardListFragment
 import com.example.user.UserActivity
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainActivityContract {
 
